@@ -1,0 +1,7 @@
+<endpoints xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime'
+	version='2.0'>
+	<endpoint 
+		name='FASTENERS_SERVICES_APIService' 
+		implementation='org.jllinares.api.panama.fasteners.service.ManagerAPIServiceImpl'
+		url-pattern='/FASTENERS_SERVICES_APIService' />
+</endpoints>

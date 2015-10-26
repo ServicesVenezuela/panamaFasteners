@@ -1,0 +1,14 @@
+<!ELEMENT msf (generic | (database?) | (webservice?) | (ldap?))>
+<!--Parámetros de carácter de autenticacion con ldap-->
+<!ELEMENT ldap (init-param+)>
+<!--Parámetros de carácter genéricos-->
+<!ELEMENT generic (init-param+)>
+<!-- Parámetros de base de datos -->
+<!ELEMENT database (init-param+)>
+<!--Parámetros de los webservice -->
+<!ELEMENT webservice (init-param+)>
+<!--Parámetros de las cartas -->
+<!ELEMENT cartas (init-param+)>
+<!ELEMENT init-param (param-name,param-value)>
+<!ELEMENT param-name (#PCDATA)>
+<!ELEMENT param-value (#PCDATA)>

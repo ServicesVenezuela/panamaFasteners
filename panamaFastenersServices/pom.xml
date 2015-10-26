@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jllinares.api</groupId>
+    <artifactId>panamaFasteners</artifactId>
+    <version>2.0.0-RC1</version>
+  </parent>
+  <artifactId>panamaFastenersServices</artifactId>
+	<packaging>war</packaging>
+	<name>Panamafasteners Service API</name>
+	<description>Clases de servicios del API</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.jllinares.api</groupId>
+			<artifactId>panamaFastenersCore</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>PanamaFastenersServices</finalName>
+	</build>
+</project>

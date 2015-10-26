@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jllinares.api.panama.fasteners.service.beans">
+	<resultMap type="org.jllinares.api.panama.fasteners.service.beans.LocalizacionBean" id="LocalizacionMap">
+		<result property="codigo" column="cod_location" />
+		<result property="descripcion" column="desc_location" />
+	</resultMap>
+	<resultMap type="org.jllinares.api.panama.fasteners.service.beans.ResponsableBean" id="ResponsableMap">
+		<result property="codigo" column="cod_responsable" />
+		<result property="nombre" column="nom_responsable" />
+	</resultMap>
+	<resultMap type="org.jllinares.api.panama.fasteners.service.beans.HistoricoDocumentoLocalizacionBean" id="HistoricoDocumentoLocalizacionMap">
+		<result property="identificacionTrack" column="id_traking" />
+		<result property="codigoLocalizacion" column="cod_location" />
+		<result property="localizacion" column="desc_location" />
+		<result property="fechaRegistro" column="fec_reg" />
+		<result property="codigoCliente" column="co_cli" />
+	</resultMap>
+	<resultMap type="org.jllinares.api.panama.fasteners.service.beans.DetalleDocumentoBean" id="DetalleDocumentoMap">
+		<result property="tipoDocumento" column="tipo_doc" />
+		<result property="codigoCliente" column="co_cli" />
+		<result property="anulado" column="anulado" javaType="boolean" />
+		<result property="fechaEmision" column="fec_emis" />
+		<result property="movimiento" column="movi" />
+		<result property="automatico" column="aut" javaType="boolean" />
+		<result property="numeroControl" column="num_control" />
+		<result property="contribuyente" column="contrib" javaType="boolean" />
+		<result property="fechaVencimiento" column="fec_venc" />
+		<result property="observaciones" column="observa" />
+		<result property="documentoOrigen" column="doc_orig" />
+		<result property="numeroOrigen" column="nro_orig" />
+		<result property="codigoBanco" column="co_ban" />
+		<result property="numeroCheque" column="nro_che" />
+		<result property="codigoVencimiento" column="co_ven" />
+		<result property="tipo" column="tipo" />
+		<result property="tasa" column="tasa" />
+		<result property="moneda" column="moneda" />
+		<result property="montoImpuesto" column="monto_imp" />
+		<result property="montoGeneral" column="monto_gen" />
+		<result property="montoA1" column="monto_a1" />
+		<result property="montoA2" column="monto_a2" />
+		<result property="montoBruto" column="monto_bru" />
+		<result property="descuentos" column="descuentos" />
+		<result property="montoDescuentos" column="monto_des" />
+		<result property="recargos" column="recargo" />
+		<result property="montoRecargos" column="monto_rec" />
+		<result property="montoOtros" column="monto_otr" />
+		<result property="montoNeto" column="monto_net" />
+		<result property="saldo" column="saldo" />
+		<result property="fechaCompromiso" column="feccom" />
+		<result property="numeroCompromiso" column="numcom" />
+		<result property="comision1" column="comis1" />
+		<result property="comision2" column="comis2" />
+		<result property="comision3" column="comis3" />
+		<result property="comision4" column="comis4" />
+		<result property="adicional" column="adicional" />
+	</resultMap>
+	<resultMap type="org.jllinares.api.panama.fasteners.service.beans.ChoferBean" id="ChoferMap">
+		<result property="id" column="id" />
+		<result property="name" column="nombre" />
+		<result property="apellido" column="apellido" />
+		<result property="cedula" column="cedula" />
+	</resultMap>
+	<resultMap type="org.jllinares.api.panama.fasteners.service.beans.TransporteBean" id="TransporteMap">
+		<result property="id" column="id" />
+		<result property="modeloCamion" column="modelo_camion" />
+		<result property="placaCamion" column="placa_camion" />
+		<result property="colorCamion" column="color_camion" />
+	</resultMap>
+	<resultMap type="org.jllinares.api.panama.fasteners.service.beans.ChoferTransporteBean" id="ChoferTransporteMap">
+		<result property="id" column="id" />
+		<result property="idChofer" column="id_chofer" />
+		<result property="idTransporte" column="id_transporte" />
+	</resultMap>
+	<resultMap type="org.jllinares.api.panama.fasteners.service.beans.VendedorBean" id="VendedorMap">
+		<result property="codigo" column="co_ven" />
+		<result property="tipo" column="tipo" />
+		<result property="nombre" column="ven_des" />
+		<result property="cedula" column="cedula" />
+		<result property="direccion1" column="direc1" />
+		<result property="direccion2" column="direc2" />
+		<result property="telefonos" column="telefonos" />
+		<result property="fechaRegistro" column="fecha_reg" />
+	</resultMap>
+	<resultMap type="org.jllinares.api.panama.fasteners.service.beans.ClienteBean" id="ClienteMap">
+		<result property="codigoCliente" column="co_cli" />
+		<result property="tipoCliente" column="tipo" />
+		<result property="descripcion" column="cli_des" />
+		<result property="direccion" column="direc1" />
+		<result property="telefono" column="telefonos" />
+		<result property="fax" column="fax" />
+		<result property="fechaRegistro" column="fecha_reg" />
+		<result property="rif" column="rif" />
+		<result property="email" column="email" />
+		<result property="descuentoGlobal" column="desc_glob" />
+	</resultMap>
+	<resultMap type="org.jllinares.api.panama.fasteners.service.beans.TransporteDetalleBean" id="TransporteDetalleMap">
+		<result property="identificador" column="id" />
+		<result property="modelo" column="modelo_camion" />
+		<result property="placa" column="placa_camion" />
+		<result property="color" column="color_camion" />
+	</resultMap>
+	<select id="ConsultarDetalleDocumento" resultMap="DetalleDocumentoMap" parameterType="DocumentoBean">
+		SELECT tipo_doc, co_cli, anulado, fec_emis, movi, aut, num_control, contrib, fec_venc, observa, doc_orig, nro_orig, co_ban, nro_che, co_ven, tipo, tasa, moneda, monto_imp, monto_gen, monto_a1, monto_a2, monto_bru, descuentos, monto_des, recargo, monto_rec, monto_otr, monto_net, saldo, feccom, numcom, comis1, comis2, comis3, comis4, adicional FROM docum_cc WHERE nro_doc = #{numeroDocumento}
+	</select>
+	<select id="ObtenerLocalizaciones" resultMap="LocalizacionMap">
+		SELECT cod_location, desc_location FROM docum_locations
+	</select>
+	<select id="ObtenerListaResponbables" resultMap="ResponsableMap">
+		SELECT cod_responsable, nom_responsable FROM responsables
+	</select>
+	<select id="ObtenerHistoricoLocalizacion" resultMap="HistoricoDocumentoLocalizacionMap" parameterType="DocumentoBean">
+		SELECT tr.id_traking, tr.cod_location, lo.desc_location, tr.fec_reg, tr.co_cli 
+		FROM docum_traking tr, docum_locations lo
+		WHERE tr.nro_doc = #{numeroDocumento}
+		AND tr.cod_location = lo.cod_location
+	</select>
+	<select id="ConsultarDetalleChofer" resultMap="ChoferMap" parameterType="ChoferBean">
+		SELECT id, nombre, apellido, cedula 
+		FROM choferes
+		WHERE id = #{id}
+	</select>
+	<select id="ConsultarChoferes" resultMap="ChoferMap">
+		SELECT id, nombre, apellido, cedula FROM choferes
+	</select>
+	<select id="ConsultarVendedores" resultMap="VendedorMap">
+		SELECT co_ven, tipo, ven_des, cedula, direc1, direc2, telefonos, fecha_reg FROM vendedor
+	</select>
+	<select id="ConsultarClientes" resultMap="ClienteMap">
+		SELECT co_cli, tipo, cli_des, direc1, telefonos, fax, fecha_reg, rif, email, desc_glob FROM clientes
+	</select>
+	<select id="ConsultarDetalleCliente" resultMap="ClienteMap" parameterType="ClienteBean">
+		SELECT co_cli, tipo, cli_des, direc1, telefonos, fax, fecha_reg, rif, email, desc_glob 
+		FROM clientes
+		WHERE co_cli = #{codigoCliente}
+	</select>
+	<select id="ConsultarTransportes" resultMap="TransporteDetalleMap">
+		SELECT id, modelo_camion, placa_camion ,color_camion 
+		FROM transporte
+	</select>
+	<insert id="RegistrarTracking" statementType="PREPARED" flushCache="true" parameterType="TrackingBean">
+		INSERT INTO docum_tracking (cod_location, fec_reg, nro_doc, co_cli, type_doc) 
+		VALUES (#{codigoLocalizacion}, #{fechaRegistro}, #{numeroDocumento}, #{codigoCliente}, #{tipoDocumento})	
+	</insert>
+	<insert id="RegistrarResponsable" statementType="PREPARED" flushCache="true" parameterType="ResponsableBean">
+		INSERT INTO responsables (nom_responsable) 
+		VALUES (#{nombre})	
+	</insert>
+	<insert id="CrearChofer" statementType="PREPARED" flushCache="true" parameterType="ChoferBean">
+		INSERT INTO choferes(nombre, apellido, cedula) 
+        VALUES (#{name}, #{apellido}, #{cedula})
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+    		SELECT @@identity as ID;
+		</selectKey>
+	</insert>
+	<insert id="CrearTransporte" statementType="PREPARED" flushCache="true" parameterType="TransporteBean">
+		INSERT INTO transporte(modelo_camion, placa_camion, color_camion) 
+        VALUES (#{modeloCamion}, #{placaCamion}, #{colorCamion})
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+    		SELECT @@identity as ID;
+		</selectKey>
+	</insert>
+	<insert id="CrearChoferTransporte" statementType="PREPARED" flushCache="true" parameterType="ChoferTransporteBean">
+		INSERT INTO chofer_transporte(id_chofer, id_transporte) 
+        VALUES (#{idChofer}, #{idTransporte})
+	</insert>
+</mapper>

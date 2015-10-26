@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<msf>
+  <generic>
+    <!--** ENTORNO DE LA BASE DE DATOS (local o server) **-->
+    <init-param>
+      <param-name>ENVIROMENT_DB</param-name>
+      <param-value>local</param-value>
+    </init-param>
+    <!--** FORMATO DE FECHA EN RESPUESTA DE LOS SERVICIOS **-->
+    <init-param>
+      <param-name>FORMAT_DATE_RESPONSE_SERVICE</param-name>
+      <param-value>yyyyMMdd</param-value>
+    </init-param>
+    <!--** FORMATO DE HORA EN RESPUESTA DE LOS SERVICIOS **-->
+    <init-param>
+      <param-name>FORMAT_TIME_RESPONSE_SERVICE</param-name>
+      <param-value>HH:mm:ss</param-value>
+    </init-param>
+  </generic>
+</msf>
