@@ -1,11 +1,9 @@
 package org.jllinares.api.panama.fasteners.commons;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum ServiceConstans.
  */
-public enum ServiceConstans
-{
+public enum ServiceConstans {
   
   /** The type msj info. */
   TYPE_MSJ_INFO("I"), 
@@ -55,9 +53,17 @@ public enum ServiceConstans
   /** The msj act reg error act. */
   MSJ_ACT_REG_ERROR_ACT("PARA LA OPERACION DE ACTUALIZACION DE CHOFER DEBE ENVIAR UN ID DE CHOFER EXISTENTE"),
   
+  /** The code act reg chofer trans. */
   CODE_ACT_REG_CHOFER_TRANS("0005"), 
   
-  MSJ_ACT_REG_CHOFER_TRANS("NO SE HAN LOGRADO ASOCIAR TODOS LOS REGISTROS DE TRANSPORTE AL CHOFER, POR FAVOR CONSULTE LOS DATOS PARA SU VERIFICACION - REGISTROS ASOCIADOS ");
+  /** The msj act reg chofer trans. */
+  MSJ_ACT_REG_CHOFER_TRANS("NO SE HAN LOGRADO ASOCIAR TODOS LOS REGISTROS DE TRANSPORTE AL CHOFER, POR FAVOR CONSULTE LOS DATOS PARA SU VERIFICACION - REGISTROS ASOCIADOS "),
+  
+  /** The code not delete. */
+  CODE_NOT_DELETE("0006"), 
+  
+  /** The msj not delete. */
+  MSJ_NOT_DELETE("NO SE HA LOGRADO ELIMINAR LOS VALORES DESEADOS YA QUE NO EXISTE LA INFORMACION");
 
   /** The value. */
   private String value;

@@ -138,6 +138,11 @@
 		SELECT id, modelo_camion, placa_camion ,color_camion 
 		FROM transporte
 	</select>
+	<select id="ConsultarResponsable" resultMap="ResponsableMap" parameterType="ResponsableBean">
+		SELECT cod_responsable, nom_responsable
+		FROM responsables
+		WHERE cod_responsable = #{codigo}
+	</select>
 	<insert id="RegistrarTracking" statementType="PREPARED" flushCache="true" parameterType="TrackingBean">
 		INSERT INTO docum_tracking (cod_location, fec_reg, nro_doc, co_cli, type_doc) 
 		VALUES (#{codigoLocalizacion}, #{fechaRegistro}, #{numeroDocumento}, #{codigoCliente}, #{tipoDocumento})	
@@ -164,4 +169,8 @@
 		INSERT INTO chofer_transporte(id_chofer, id_transporte) 
         VALUES (#{idChofer}, #{idTransporte})
 	</insert>
+	<delete id="EliminarResponsable" statementType="PREPARED" flushCache="true" parameterType="ResponsableBean">
+		DELETE FROM responsables
+		WHERE cod_responsable = #{codigo}
+	</delete>
 </mapper>

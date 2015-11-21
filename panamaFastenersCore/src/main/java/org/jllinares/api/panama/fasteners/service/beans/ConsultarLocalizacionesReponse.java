@@ -7,15 +7,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import org.jllinares.api.panama.fasteners.commons.beans.BaseBean;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ConsultarLocalizacionesReponse.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="CONSULTAR_LOCALIZACIONESResponse", namespace="FASTENERS_SERVICES_API", propOrder={"headerSalida", "bodySalida"})
-public class ConsultarLocalizacionesReponse extends BaseBean
-  implements Serializable
-{
+public class ConsultarLocalizacionesReponse extends BaseBean implements Serializable {
   
   /** The Constant serialVersionUID. */
   private static final long serialVersionUID = 976904790745741254L;

@@ -10,11 +10,13 @@ import javax.xml.ws.ResponseWrapper;
 
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaAsociarChoferTransportesBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultaClienteBean;
+import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultaResponsableBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultarChoferBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultarDetalleDocumentoBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultarLocalizacionDocumentoBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaCrearChoferBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaCrearTransporteBean;
+import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaEliminarResponsableBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaRegistrarHistoricoLocalizacionDocumentoBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaRegistrarResponsableBean;
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarChoferResponse;
@@ -25,6 +27,7 @@ import org.jllinares.api.panama.fasteners.service.beans.ConsultarDetalleDocument
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarListaResponsablesResponse;
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarLocalizacionDocumentoResponse;
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarLocalizacionesReponse;
+import org.jllinares.api.panama.fasteners.service.beans.ConsultarResponsableResponseBean;
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarTransportesResponse;
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarVendedoresResponse;
 import org.jllinares.api.panama.fasteners.service.beans.HeaderEntradaBean;
@@ -130,10 +133,24 @@ public interface ManagerAPIService {
 	/** The Constant CONSULTAR_TRANSPORTES_RESPONSE. */
 	public static final String CONSULTAR_TRANSPORTES_RESPONSE = "CONSULTAR_TRANSPORTESResponse";
 	
+	/** The Constant ASOCIAR_CHOFER_TRANSPORTES. */
 	public static final String ASOCIAR_CHOFER_TRANSPORTES = "ASOCIAR_CHOFER_TRANSPORTES";
 
+	/** The Constant ASOCIAR_CHOFER_TRANSPORTES_RESPONSE. */
 	public static final String ASOCIAR_CHOFER_TRANSPORTES_RESPONSE = "ASOCIAR_CHOFER_TRANSPORTESResponse";
 
+	/** The Constant CONSULTAR_RESPONSABLE. */
+	public static final String CONSULTAR_RESPONSABLE = "CONSULTAR_RESPONSABLE";
+
+	/** The Constant CONSULTAR_RESPONSABLE_RESPONSE. */
+	public static final String CONSULTAR_RESPONSABLE_RESPONSE = "CONSULTAR_RESPONSABLEResponse";
+	
+	/** The Constant ELIMINAR_RESPONSABLE. */
+	public static final String ELIMINAR_RESPONSABLE = "ELIMINAR_RESPONSABLE";
+
+	/** The Constant ELIMINAR_RESPONSABLE_RESPONSE. */
+	public static final String ELIMINAR_RESPONSABLE_RESPONSE = "ELIMINAR_RESPONSABLEResponse";
+	
 	/**
 	 * Consultar localizaciones.
 	 *
@@ -324,4 +341,29 @@ public interface ManagerAPIService {
 	@ResponseWrapper(localName=ASOCIAR_CHOFER_TRANSPORTES_RESPONSE, targetNamespace=TARGET_NAMESPACE, className="")
 	public HeaderSalidaBean asociarChoferTransportes(@WebParam(name=HeaderEntradaBean.HEADER_ENTRADA, targetNamespace=TARGET_NAMESPACE) HeaderEntradaBean headerEntrada, @WebParam(name=BodyEntradaAsociarChoferTransportesBean.BODY_ENTRADA_NAME, targetNamespace=TARGET_NAMESPACE) BodyEntradaAsociarChoferTransportesBean bodyEntrada);
 	
+	/**
+	 * Consultar responsable.
+	 *
+	 * @param headerEntrada the header entrada
+	 * @param bodyEntrada the body entrada
+	 * @return the consultar responsable response bean
+	 */
+	@WebResult(name=CONSULTAR_RESPONSABLE_RESPONSE, targetNamespace=TARGET_NAMESPACE)
+	@WebMethod(operationName=CONSULTAR_RESPONSABLE, action=CONSULTAR_RESPONSABLE)
+	@RequestWrapper(localName=CONSULTAR_RESPONSABLE, targetNamespace=TARGET_NAMESPACE, className="")
+	@ResponseWrapper(localName=CONSULTAR_RESPONSABLE_RESPONSE, targetNamespace=TARGET_NAMESPACE, className="")
+	public ConsultarResponsableResponseBean consultarResponsable(@WebParam(name=HeaderEntradaBean.HEADER_ENTRADA, targetNamespace=TARGET_NAMESPACE) HeaderEntradaBean headerEntrada, @WebParam(name=BodyEntradaConsultaResponsableBean.BODY_ENTRADA_NAME, targetNamespace=TARGET_NAMESPACE) BodyEntradaConsultaResponsableBean bodyEntrada);
+	
+	/**
+	 * Eliminar responsable.
+	 *
+	 * @param headerEntrada the header entrada
+	 * @param bodyEntrada the body entrada
+	 * @return the header salida bean
+	 */
+	@WebResult(name=ELIMINAR_RESPONSABLE_RESPONSE, targetNamespace=TARGET_NAMESPACE)
+	@WebMethod(operationName=ELIMINAR_RESPONSABLE, action=ELIMINAR_RESPONSABLE)
+	@RequestWrapper(localName=ELIMINAR_RESPONSABLE, targetNamespace=TARGET_NAMESPACE, className="")
+	@ResponseWrapper(localName=ELIMINAR_RESPONSABLE_RESPONSE, targetNamespace=TARGET_NAMESPACE, className="")
+	public HeaderSalidaBean eliminarResponsable(@WebParam(name=HeaderEntradaBean.HEADER_ENTRADA, targetNamespace=TARGET_NAMESPACE) HeaderEntradaBean headerEntrada, @WebParam(name=BodyEntradaEliminarResponsableBean.BODY_ENTRADA_NAME, targetNamespace=TARGET_NAMESPACE) BodyEntradaEliminarResponsableBean bodyEntrada);
 }

@@ -12,11 +12,13 @@ import org.jllinares.api.panama.fasteners.commons.ServiceConstans;
 import org.jllinares.api.panama.fasteners.dao.ManagerServiceDAO;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaAsociarChoferTransportesBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultaClienteBean;
+import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultaResponsableBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultarChoferBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultarDetalleDocumentoBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultarLocalizacionDocumentoBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaCrearChoferBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaCrearTransporteBean;
+import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaEliminarResponsableBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaRegistrarHistoricoLocalizacionDocumentoBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodyEntradaRegistrarResponsableBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodySalidaConsultarChoferBean;
@@ -26,6 +28,7 @@ import org.jllinares.api.panama.fasteners.service.beans.BodySalidaConsultarDetal
 import org.jllinares.api.panama.fasteners.service.beans.BodySalidaConsultarDetalleDocumentoBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodySalidaConsultarLocalizacionDocumentoBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodySalidaConsultarLocalizacionesBean;
+import org.jllinares.api.panama.fasteners.service.beans.BodySalidaConsultarResponsableBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodySalidaConsultarResponsablesBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodySalidaConsultarTransportesBean;
 import org.jllinares.api.panama.fasteners.service.beans.BodySalidaConsultarVendedoresBean;
@@ -40,6 +43,7 @@ import org.jllinares.api.panama.fasteners.service.beans.ConsultarDetalleDocument
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarListaResponsablesResponse;
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarLocalizacionDocumentoResponse;
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarLocalizacionesReponse;
+import org.jllinares.api.panama.fasteners.service.beans.ConsultarResponsableResponseBean;
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarTransportesResponse;
 import org.jllinares.api.panama.fasteners.service.beans.ConsultarVendedoresResponse;
 import org.jllinares.api.panama.fasteners.service.beans.DetalleDocumentoBean;
@@ -56,7 +60,6 @@ import org.jllinares.api.panama.fasteners.service.beans.VendedorBean;
 import org.jllinares.api.panama.fasteners.utils.LoadConfigurationUtils;
 import org.jllinares.api.panama.fasteners.utils.ServicesUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ManagerAPIServiceImpl.
  */
@@ -380,20 +383,20 @@ public class ManagerAPIServiceImpl implements ManagerAPIService, Logeable {
 		ManagerServiceDAO dao = LoadConfigurationUtils.getRegisterDB();
 		ServicesUtils utils = new ServicesUtils();
 		ChoferBean chofer = new ChoferBean();
-		
+
 		if (dao.isConnected()) {
 			chofer.setName(bodyEntrada.getName());
 			chofer.setApellido(bodyEntrada.getApellido());
 			chofer.setCedula(bodyEntrada.getCedula());
-			
+
 			if(dao.insertarInstancia(new StringBuilder().append(AppConstans.NAMESPACE_UTIL.getValue()).append("CrearChofer").toString(), chofer)>0) {
 				LOGGER_INFO.info("Se ha insertado al chofer con id " + chofer.getId());
-			
+
 				if(bodyEntrada.getTransportes() != null) {
 					for(TransporteBean transporte : bodyEntrada.getTransportes()) {
 						if(dao.insertarInstancia(new StringBuilder().append(AppConstans.NAMESPACE_UTIL.getValue()).append("CrearTransporte").toString(), transporte)>0) {
 							LOGGER_INFO.info("Se ha insertado al transporte con id " + transporte.getId());
-						
+
 							if(dao.insertarInstancia(new StringBuilder().append(AppConstans.NAMESPACE_UTIL.getValue()).append("CrearChoferTransporte").toString(), new ChoferTransporteBean(chofer.getId(), transporte.getId()))>0) {
 								LOGGER_INFO.info("Se ha insertado al chofer_transporte correctamente");				
 							}
@@ -401,13 +404,13 @@ public class ManagerAPIServiceImpl implements ManagerAPIService, Logeable {
 					}
 				}
 			}
-			
+
 			else {
 				LOGGER_ERROR.error("Se ha producido un error al momento de insertar al chofer ");
 			}
 
 		}
-		
+
 		else {
 			setHeaderSalidaSinConexion(headerSalida, utils);
 		}
@@ -532,7 +535,7 @@ public class ManagerAPIServiceImpl implements ManagerAPIService, Logeable {
 		response.setHeaderSalida(headerSalida);
 		return response;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.jllinares.api.panama.fasteners.service.ManagerAPIService#crearTransporte(org.jllinares.api.panama.fasteners.service.beans.HeaderEntradaBean, org.jllinares.api.panama.fasteners.service.beans.BodyEntradaCrearTransporteBean)
 	 */
@@ -543,29 +546,29 @@ public class ManagerAPIServiceImpl implements ManagerAPIService, Logeable {
 		ManagerServiceDAO dao = LoadConfigurationUtils.getRegisterDB();
 		ServicesUtils utils = new ServicesUtils();
 		TransporteBean transporte = new TransporteBean();
-		
+
 		if (dao.isConnected()) {
 			transporte.setColorCamion(bodyEntrada.getColor());
 			transporte.setModeloCamion(bodyEntrada.getModelo());
 			transporte.setPlacaCamion(bodyEntrada.getPlaca());
-			
+
 			if(dao.insertarInstancia(new StringBuilder().append(AppConstans.NAMESPACE_UTIL.getValue()).append("CrearTransporte").toString(), transporte)>0) {
 				LOGGER_INFO.info("Se ha insertado al transporte con id " + transporte.getId());
 			}
-			
+
 			else {
 				LOGGER_ERROR.error("Se ha producido un error al momento de insertar al transporte");
 				headerSalida = utils.setHeaderSalidaWithError(headerSalida, ServiceConstans.TYPE_MSJ_INFO.getValue(), ServiceConstans.CODE_NOT_REGISTER.getValue(), ServiceConstans.MSJ_NOT_REGISTER.getValue());
 			}
 		}
-		
+
 		else {
 			setHeaderSalidaSinConexion(headerSalida, utils);
 		}
 
 		return headerSalida;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.jllinares.api.panama.fasteners.service.ManagerAPIService#consultarTransportes(org.jllinares.api.panama.fasteners.service.beans.HeaderEntradaBean)
 	 */
@@ -578,7 +581,7 @@ public class ManagerAPIServiceImpl implements ManagerAPIService, Logeable {
 		ManagerServiceDAO dao = LoadConfigurationUtils.getRegisterDB();
 		ServicesUtils utils = new ServicesUtils();
 		List<TransporteDetalleBean> list = null;
-		
+
 		if (dao.isConnected()) {
 			list = (List<TransporteDetalleBean>) dao.obtenerInstancias(new StringBuilder().append(AppConstans.NAMESPACE_UTIL.getValue()).append("ConsultarTransportes").toString());
 
@@ -586,13 +589,13 @@ public class ManagerAPIServiceImpl implements ManagerAPIService, Logeable {
 				LOGGER_INFO.info("No se han encontrado Transportes");
 				headerSalida = utils.setHeaderSalidaWithError(headerSalida, ServiceConstans.TYPE_MSJ_INFO.getValue(), ServiceConstans.CODE_LIST_EMPTY.getValue(), ServiceConstans.MSJ_LIST_EMPTY.getValue());
 			}
-			
+
 			else {
 				bodySalida.setTransportes(list);
 			}
-			
+
 		}
-	
+
 		else {
 			setHeaderSalidaSinConexion(headerSalida, utils);
 		}
@@ -601,7 +604,10 @@ public class ManagerAPIServiceImpl implements ManagerAPIService, Logeable {
 		response.setHeaderSalida(headerSalida);
 		return response;
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see org.jllinares.api.panama.fasteners.service.ManagerAPIService#asociarChoferTransportes(org.jllinares.api.panama.fasteners.service.beans.HeaderEntradaBean, org.jllinares.api.panama.fasteners.service.beans.BodyEntradaAsociarChoferTransportesBean)
+	 */
 	@Override
 	public HeaderSalidaBean asociarChoferTransportes(HeaderEntradaBean headerEntrada, BodyEntradaAsociarChoferTransportesBean bodyEntrada) {
 		LOGGER_INFO.info("Peticion al metodo " + ASOCIAR_CHOFER_TRANSPORTES + " recibida");
@@ -610,38 +616,108 @@ public class ManagerAPIServiceImpl implements ManagerAPIService, Logeable {
 		ServicesUtils utils = new ServicesUtils();
 		ChoferTransporteBean relacion = new ChoferTransporteBean();
 		int inserted = 0;
-		
+
 		if (dao.isConnected()) {
 			relacion.setIdChofer(bodyEntrada.getIdChofer());
-			
+
 			for(Integer id : bodyEntrada.getIdsTransportes()) {
 				relacion.setIdTransporte(id.intValue());
 				inserted += dao.insertarInstancia(new StringBuilder().append(AppConstans.NAMESPACE_UTIL.getValue()).append("CrearChoferTransporte").toString(), relacion); 
 			}
-			
+
 			if(inserted == bodyEntrada.getIdsTransportes().size()) {
 				LOGGER_INFO.info("Se han insertado correctamente todos los registros de relacion ");
 			}
-			
+
 			else {
 				LOGGER_ERROR.error("Se ha producido un error al momento de insertar a la relacion entre un chofer y sus transportes");
-				
+
 				switch(inserted) {
-					case 0:
-						headerSalida = utils.setHeaderSalidaWithError(headerSalida, ServiceConstans.TYPE_MSJ_INFO.getValue(), ServiceConstans.CODE_NOT_REGISTER.getValue(), ServiceConstans.MSJ_NOT_REGISTER_DETAIL.getValue());
-						break;
-						
-					default:
-						headerSalida = utils.setHeaderSalidaWithError(headerSalida, ServiceConstans.TYPE_MSJ_WARNING.getValue(), ServiceConstans.CODE_ACT_REG_CHOFER_TRANS.getValue(), ServiceConstans.MSJ_ACT_REG_CHOFER_TRANS.getValue() + inserted);
-						break;
+				case 0:
+					headerSalida = utils.setHeaderSalidaWithError(headerSalida, ServiceConstans.TYPE_MSJ_INFO.getValue(), ServiceConstans.CODE_NOT_REGISTER.getValue(), ServiceConstans.MSJ_NOT_REGISTER_DETAIL.getValue());
+					break;
+
+				default:
+					headerSalida = utils.setHeaderSalidaWithError(headerSalida, ServiceConstans.TYPE_MSJ_WARNING.getValue(), ServiceConstans.CODE_ACT_REG_CHOFER_TRANS.getValue(), ServiceConstans.MSJ_ACT_REG_CHOFER_TRANS.getValue() + inserted);
+					break;
 				}
 			}
 		}
-		
+
 		else {
 			setHeaderSalidaSinConexion(headerSalida, utils);
 		}
 
+		return headerSalida;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jllinares.api.panama.fasteners.service.ManagerAPIService#consultarResponsable(org.jllinares.api.panama.fasteners.service.beans.HeaderEntradaBean, org.jllinares.api.panama.fasteners.service.beans.BodyEntradaConsultaResponsableBean)
+	 */
+	@Override
+	public ConsultarResponsableResponseBean consultarResponsable(HeaderEntradaBean headerEntrada, BodyEntradaConsultaResponsableBean bodyEntrada) {
+		LOGGER_INFO.info("Peticion al metodo " + CONSULTAR_RESPONSABLE + " recibida");
+		HeaderSalidaBean headerSalida = new HeaderSalidaBean();
+		final ManagerServiceDAO dao = LoadConfigurationUtils.getRegisterDB();
+		final ServicesUtils utils = new ServicesUtils();
+		final ConsultarResponsableResponseBean response = new ConsultarResponsableResponseBean();
+		final ResponsableBean responsable = new ResponsableBean();
+		
+		if (dao.isConnected()) {
+			responsable.setCodigo(bodyEntrada.getIdResponsable());
+			final List<ResponsableBean>list = (List<ResponsableBean>) dao.obtenerInstanciasWithFilter(new StringBuilder().append(AppConstans.NAMESPACE_UTIL.getValue()).append("ConsultarResponsable").toString(), responsable);
+
+			if (list == null || list.isEmpty()) {
+				LOGGER_INFO.info("No se han encontrado Responsable");
+				headerSalida = utils.setHeaderSalidaWithError(headerSalida, ServiceConstans.TYPE_MSJ_INFO.getValue(), ServiceConstans.CODE_LIST_EMPTY.getValue(), ServiceConstans.MSJ_LIST_EMPTY.getValue());
+			}
+
+			else {
+				final BodySalidaConsultarResponsableBean bodySalida = new BodySalidaConsultarResponsableBean();
+				bodySalida.setResponsable(list.get(0));
+				response.setBodySalida(bodySalida);
+			}
+		
+		}
+
+		else {
+			setHeaderSalidaSinConexion(headerSalida, utils);
+		}
+		
+		response.setHeaderSalida(headerSalida);
+		return response;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.jllinares.api.panama.fasteners.service.ManagerAPIService#eliminarResponsable(org.jllinares.api.panama.fasteners.service.beans.HeaderEntradaBean, org.jllinares.api.panama.fasteners.service.beans.BodyEntradaEliminarResponsableBean)
+	 */
+	@Override
+	public HeaderSalidaBean eliminarResponsable(HeaderEntradaBean headerEntrada, BodyEntradaEliminarResponsableBean bodyEntrada) {
+		LOGGER_INFO.info("Peticion al metodo " + ELIMINAR_RESPONSABLE + " recibida");
+		HeaderSalidaBean headerSalida = new HeaderSalidaBean();
+		final ManagerServiceDAO dao = LoadConfigurationUtils.getRegisterDB();
+		final ServicesUtils utils = new ServicesUtils();
+
+		if (dao.isConnected()) {
+			final ResponsableBean responsable = new ResponsableBean();
+			responsable.setCodigo(bodyEntrada.getIdResponsable());
+			
+			if(dao.eliminarInstancia(new StringBuilder().append(AppConstans.NAMESPACE_UTIL.getValue()).append("EliminarResponsable").toString(), responsable)>0) {
+				LOGGER_INFO.info("Se ha eliminado al responsable con id " + responsable.getCodigo());
+			}
+
+			else {
+				LOGGER_ERROR.error("Se ha producido un error al momento de eliminar el responsable");
+				headerSalida = utils.setHeaderSalidaWithError(headerSalida, ServiceConstans.TYPE_MSJ_INFO.getValue(), ServiceConstans.CODE_NOT_DELETE.getValue(), ServiceConstans.MSJ_NOT_DELETE.getValue());
+			}
+			
+		}
+
+		else {
+			setHeaderSalidaSinConexion(headerSalida, utils);
+		}
+		
 		return headerSalida;
 	}
 
